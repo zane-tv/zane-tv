@@ -43,8 +43,12 @@ const zane = {
 
 <div align="center">
 
-<img height="180" src="https://github-readme-stats.vercel.app/api?username=zane-tv&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&bg_color=1a1b27" />
-<img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=zane-tv&layout=compact&theme=tokyonight&hide_border=true&langs_count=8&bg_color=1a1b27" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=zane-tv&theme=tokyonight" width="100%" />
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=zane-tv&theme=tokyonight" height="180" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=zane-tv&theme=tokyonight" height="180" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=zane-tv&theme=tokyonight" height="180" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=zane-tv&theme=tokyonight&utcOffset=7" height="180" />
 
 <img src="https://streak-stats.demolab.com/?user=zane-tv&theme=tokyonight&hide_border=true&background=1a1b27" />
 
