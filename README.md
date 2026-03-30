@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=0:1a1b27,50:70a5fd,100:bf91f3&height=230&section=header&text=Hey%2C%20I'm%20Zane&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Full-stack%20Developer%20%C2%B7%20AI%20Engineer%20%C2%B7%20DevOps&descSize=18&descAlignY=55&descColor=a9b1d6)
+![header](https://capsule-render.vercel.app/api?type=venom&color=0:0d1117,30:1a1b40,65:7aa2f7,100:bb9af7&height=300&section=header&text=Hey%2C%20I%27m%20Zane%20%F0%9F%91%8B&fontSize=58&fontColor=e0def4&animation=fadeIn&fontAlignY=42&desc=Full-stack%20Developer%20%E2%80%A2%20AI%20Engineer%20%E2%80%A2%20DevOps&descSize=20&descAlignY=63&descColor=bb9af7&stroke=7aa2f7&strokeWidth=2)
 
 <div align="center">
 
@@ -97,4 +97,4 @@ const zane = {
 
 </div>
 
-![footer](https://capsule-render.vercel.app/api?type=waving&color=0:1a1b27,50:70a5fd,100:bf91f3&height=120&section=footer)
+![footer](https://capsule-render.vercel.app/api?type=venom&color=0:bb9af7,50:7aa2f7,100:0d1117&height=150&section=footer)
