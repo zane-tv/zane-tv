@@ -19,7 +19,7 @@ const zane = {
   location: "Vietnam 🇻🇳",
   roles: ["Full-stack Developer", "AI Engineer", "DevOps"],
   currentFocus: "Building dev tools & AI-powered applications",
-  funFact: "I mass mass mass mass mass mass mass mass mass mass mass mass mass mass mass mass",
+  funFact: "I ship things before they're perfect, then make them perfect",
 };
 ```
 
@@ -34,16 +34,6 @@ const zane = {
 <div align="center">
 
 [![My Skills](https://skillicons.dev/icons?i=ts,js,python,php,nodejs,bun,react,nextjs,tailwind,laravel,express,fastapi,docker,linux,git,mongodb,postgres,redis,aws,figma&theme=dark&perline=10)](https://skillicons.dev)
-
-</div>
-
----
-
-### 🏆 GitHub Trophies
-
-<div align="center">
-
-[![trophy](https://github-profile-trophy.vercel.app/?username=zane-tv&theme=tokyonight&no-frame=true&no-bg=true&row=1&column=7)](https://github.com/ryo-ma/github-profile-trophy)
 
 </div>
 
