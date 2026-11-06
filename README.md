@@ -3,15 +3,13 @@
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg"><img src="assets/hero-light.svg" width="100%" alt="Zane. I build developer tools, plumbing for AI agents, and a Buddhist temple that runs on TikTok Live. The bronze drum's outer ring charts 366 contributions over the last year, one tick per week."></picture>
 
 <p>
-  <a href="https://github.com/zane-tv/tiktok-live-temple-rpc"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/work-tiktok-live-temple-rpc-dark.svg"><img src="assets/work-tiktok-live-temple-rpc-light.svg" width="49.3%" alt="Chùa Linh Ứng Online: A 9:16 Buddhist temple that runs as a TikTok Live. Viewers light incense, ring the bell and draw fortune sticks with comments, likes and gifts. 221 stars, 342 forks."></picture></a>
+  <a href="https://github.com/zane-tv/tiktok-live-temple-rpc"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/work-tiktok-live-temple-rpc-dark.svg"><img src="assets/work-tiktok-live-temple-rpc-light.svg" width="49.3%" alt="Chùa Linh Ứng Online: A 9:16 Buddhist temple that runs as a TikTok Live. Viewers light incense, ring the bell and draw fortune sticks with comments, likes and gifts. 221 stars, 341 forks."></picture></a>
   <a href="https://github.com/zane-tv/soft-db"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/work-soft-db-dark.svg"><img src="assets/work-soft-db-light.svg" width="49.3%" alt="SoftDB: Desktop client for Postgres, MySQL, SQLite, MongoDB and Redis, with a schema-aware AI assistant. Ships on Homebrew. 14 stars, 1 forks."></picture></a>
   <a href="https://github.com/zane-tv/opencode-multi-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/work-opencode-multi-ai-dark.svg"><img src="assets/work-opencode-multi-ai-light.svg" width="49.3%" alt="opencode-multi-ai: One OpenCode plugin that pools SuperGrok, ChatGPT and Kiro accounts, rotates when a quota runs dry, and shows usage in the TUI. 5 stars, 1 forks."></picture></a>
   <a href="https://github.com/zane-tv/agent-skills"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/work-agent-skills-dark.svg"><img src="assets/work-agent-skills-light.svg" width="49.3%" alt="agent-skills: Installable skills for coding agents: Figma to code with pixel-diff checks, manual test sheets, and a malware audit for fresh clones. 3 stars, 0 forks."></picture></a>
 </p>
 
 Lately: more interactive TikTok Live stages on Bun and Electrobun, agent skills for motion-graphics videos in [holdframe](https://github.com/zane-tv/holdframe), and a local-first OCR translator that runs in the browser.
-
-<a name="support"></a>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/support-dark.svg"><img src="assets/support-light.svg" width="100%" alt="Support / Ủng hộ. Everything here is free and open source. If something saved you an afternoon, a small tip keeps the next experiment going. Quét mã bằng app ngân hàng, MoMo hoặc ZaloPay. Cảm ơn! VietQR for Techcombank account 19073075911015."></picture>
 

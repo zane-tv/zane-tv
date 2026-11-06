@@ -4,7 +4,7 @@ import { featured, profile, support } from "./content";
 import { fetchProfile } from "./github";
 import { hero } from "./hero";
 import { parseVietQR, qrPath } from "./qr";
-import { readme } from "./readme";
+import { donatePage, readme } from "./readme";
 import { sponsorButton, supportArt } from "./support";
 import { themes } from "./theme";
 import { loadFonts } from "./type";
@@ -30,6 +30,7 @@ for (const t of themes) {
   if (data.sponsorsPublic) files.set(`assets/sponsor-${t.name}.svg`, sponsorButton(t));
 }
 files.set("README.md", readme(data, account));
+files.set("DONATE.md", donatePage(data, account));
 
 await rm(`${root}assets`, { recursive: true, force: true });
 await mkdir(`${root}assets`, { recursive: true });

@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit redrawn assets
         run: |
-          git add -A README.md assets
+          git add -A README.md DONATE.md assets
           if git diff --cached --quiet; then
             echo "Nothing changed."
             exit 0
