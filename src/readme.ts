@@ -1,7 +1,10 @@
+import { activityAlt } from "./activity";
 import { cardAlt } from "./card";
 import { featured, profile, support } from "./content";
 import type { ProfileData } from "./github";
 import { heroAlt } from "./hero";
+import { rolesAlt } from "./roles";
+import { languagesAlt, statsAlt } from "./stats";
 import { esc } from "./svg";
 import { supportAlt } from "./support";
 
@@ -24,20 +27,30 @@ function supportBlock(data: ProfileData, account: string): string {
 }
 
 export function readme(data: ProfileData, account: string): string {
-  // One paragraph: the inline gap between images is the same across and down,
-  // and 2 x 49.3% plus that gap still fits a 320px-wide mobile column.
+  // One paragraph per grid: the inline gap between images is the same across
+  // and down, and 2 x 49.3% plus that gap still fits a 320px-wide column.
   const cards = featured.map((p) => {
     const stats = data.repos.get(p.repo)!;
     return `  <a href="https://github.com/${profile.login}/${p.repo}">${picture(`work-${p.repo}`, cardAlt(p, stats), "49.3%")}</a>`;
   });
+  const repos = `https://github.com/${profile.login}?tab=repositories`;
 
   return `${GENERATED}
 
 ${picture("hero", heroAlt(data), "100%")}
 
+${picture("roles", rolesAlt(), "100%")}
+
 <p>
 ${cards.join("\n")}
 </p>
+
+<p>
+  <a href="${repos}&sort=stargazers">${picture("stats", statsAlt(data), "49.3%")}</a>
+  <a href="${repos}">${picture("languages", languagesAlt(data), "49.3%")}</a>
+</p>
+
+${picture("activity", activityAlt(data), "100%")}
 
 ${profile.lately}
 

@@ -1,6 +1,7 @@
-import octicons from "@primer/octicons";
+import { icon } from "./card";
 import { support } from "./content";
 import { BIRD, chain, flock, rings } from "./drum";
+import { motion, spin } from "./motion";
 import { n, svgDoc } from "./svg";
 import type { Theme } from "./theme";
 import { Glyphs, measure, wrap, type TextStyle } from "./type";
@@ -27,10 +28,11 @@ export function supportArt(t: Theme, qr: { size: number; d: string }, account: s
   const outer = 228;
   const drum =
     `<g clip-path="url(#frame)"><g transform="translate(${n(cx)} ${n(cy)})" color="${t.bronze}" stroke="currentColor" fill="none" stroke-width=".9" opacity=".42">` +
+    `<circle class="rip" r="180" stroke-width="1.4" opacity="0"/>` +
     rings(180, 183) +
-    chain(36, 190, 3.8) +
+    `<g class="cw">${chain(36, 190, 3.8)}</g>` +
     rings(197, 199.5) +
-    flock(12, 211) +
+    `<g class="ccw">${flock(12, 211)}</g>` +
     rings(outer) +
     `</g></g>`;
 
@@ -68,10 +70,19 @@ export function supportArt(t: Theme, qr: { size: number; d: string }, account: s
 
   const frame = `<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="14" fill="none" stroke="${t.line}" stroke-opacity=".16"/>`;
 
+  // Same beat as the hero drum: a ring of sound leaves the QR every 4s.
+  const style = motion(
+    spin("cw", 200),
+    spin("ccw", -120),
+    `.rip{animation:rip 6s cubic-bezier(.1,.6,.3,1) infinite}` +
+      `@keyframes rip{0%{opacity:.9;transform:scale(1)}27%,100%{opacity:0;transform:scale(1.3)}}`,
+  );
+
   return svgDoc({
     width: W,
     height: H,
     title: supportAlt(account),
+    style,
     defs: `<clipPath id="frame"><rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="14"/></clipPath>${BIRD}${g.defs()}`,
     body: frame + drum + tile + text,
   });
@@ -86,7 +97,7 @@ export function sponsorButton(t: Theme): string {
   const h = 48;
   const body =
     `<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="12" fill="${t.bronze}" fill-opacity=".08" stroke="${t.bronze}" stroke-opacity=".55"/>` +
-    `<g fill="${t.bronze}" transform="translate(24 15) scale(1.125)">${octicons["heart-fill"].heights[16]!.path}</g>` +
+    icon("heart-fill", 24, 15, 18, t.bronze) +
     g.text(label, "Sponsor on GitHub", 24 + 18 + 10, 30, { fill: t.ink });
   return svgDoc({ width: w, height: h, title: "Sponsor Zane on GitHub", defs: g.defs(), body });
 }

@@ -94,6 +94,7 @@ type Paint = { fill: string; opacity?: number; anchor?: "start" | "middle" | "en
 /** Glyph outline registry for one SVG document. */
 export class Glyphs {
   private readonly paths = new Map<string, string>();
+  private readonly clips: string[] = [];
 
   private use(key: FontKey, g: Glyph): string | null {
     const id = `${ID_PREFIX[key]}${g.index}`;
@@ -156,7 +157,58 @@ export class Glyphs {
     return `<g fill="${paint.fill}"${op} transform="translate(${n(cx)} ${n(cy)})">${uses}</g>`;
   }
 
+  /**
+   * A number whose digits roll into place like a counter. Each digit is a
+   * 0-9,0-9 strip clipped to one line and parked on its final digit by an
+   * inline transform; a `.roll` CSS animation slides the strips up from 0.
+   * Without that rule (reduced motion) the final value is simply shown.
+   * Returns the markup and its rendered width in px.
+   */
+  roll(style: TextStyle, text: string, x: number, y: number, paint: Paint & { delay?: number }): { svg: string; width: number } {
+    const f = font(style.font);
+    const k = style.size / f.unitsPerEm;
+    const digits = f.stringToGlyphs("0123456789");
+    const cell = Math.max(...digits.map((g) => g.advanceWidth ?? 0)); // tabular figures
+    const track = (style.tracking ?? 0) * f.unitsPerEm;
+    const pitch = Math.round(1.3 * f.unitsPerEm);
+
+    const slots: { x: number; digit: number | null; glyph: Glyph }[] = [];
+    let cursor = 0;
+    for (const ch of text) {
+      const digit = ch >= "0" && ch <= "9" ? Number(ch) : null;
+      const glyph = digit === null ? f.charToGlyph(ch) : digits[digit]!;
+      slots.push({ x: cursor, digit, glyph });
+      cursor += (digit === null ? (glyph.advanceWidth ?? 0) : cell) + track;
+    }
+    const width = (cursor - (slots.length ? track : 0)) * k;
+    const x0 = paint.anchor === "middle" ? x - width / 2 : paint.anchor === "end" ? x - width : x;
+    const place = `translate(${n(x0)} ${n(y)}) scale(${n(k, 5)})`;
+
+    let delay = paint.delay ?? 0;
+    const columns = slots.map((s) => {
+      if (s.digit === null) {
+        const id = this.use(style.font, s.glyph);
+        return id ? `<g transform="${place}"><use href="#${id}" x="${Math.round(s.x)}"/></g>` : "";
+      }
+      const strip = Array.from({ length: 20 }, (_, j) => {
+        const g = digits[j % 10]!;
+        return `<use href="#${this.use(style.font, g)}" x="${Math.round(s.x + (cell - (g.advanceWidth ?? 0)) / 2)}" y="${j * pitch}"/>`;
+      }).join("");
+      const shift = (10 + s.digit) * pitch * k;
+      const column = `<g class="roll" style="transform:translateY(${n(-shift)}px);animation-delay:${n(delay)}s"><g transform="${place}">${strip}</g></g>`;
+      delay += 0.07;
+      return column;
+    });
+
+    const id = `clip${this.clips.length}`;
+    this.clips.push(
+      `<clipPath id="${id}"><rect x="${n(x0 - 2)}" y="${n(y - 0.9 * style.size)}" width="${n(width + 4)}" height="${n(1.15 * style.size)}"/></clipPath>`,
+    );
+    const op = paint.opacity === undefined ? "" : ` opacity="${n(paint.opacity)}"`;
+    return { svg: `<g clip-path="url(#${id})" fill="${paint.fill}"${op}>${columns.join("")}</g>`, width };
+  }
+
   defs(): string {
-    return [...this.paths].map(([id, d]) => (d ? `<path id="${id}" d="${d}"/>` : "")).join("");
+    return [...this.paths].map(([id, d]) => (d ? `<path id="${id}" d="${d}"/>` : "")).join("") + this.clips.join("");
   }
 }

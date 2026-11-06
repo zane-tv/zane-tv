@@ -7,14 +7,40 @@ export const profile = {
   login: "zane-tv",
   name: "Zane",
   greeting: "XIN CHÀO, MÌNH LÀ",
-  /** Hero lines, broken by hand for a good rag. Each must fit 470px at 19px. */
-  tagline: ["I build developer tools, plumbing for AI agents,", "and a Buddhist temple that runs on TikTok Live."],
-  meta: "Saigon, Vietnam · TypeScript · Go · Python · Bun",
+  /** Cycled under the name, one at a time, in the same order as `roles`. */
+  titles: ["Full-stack engineer", "AI engineer", "Data engineer", "DevOps engineer", "Tool builder"],
+  /** Hero lines, broken by hand for a good rag. Each must fit 470px at 17.5px. */
+  intro: ["Nearly four years shipping web products for teams", "in Japan, Germany, Singapore and Sweden."],
+  meta: "Saigon, Vietnam · TypeScript · Go · Python · PHP",
   lately:
-    "Lately: more interactive TikTok Live stages on Bun and Electrobun, agent skills for motion-graphics videos in " +
-    "[holdframe](https://github.com/zane-tv/holdframe), and a local-first OCR translator that runs in the browser.",
+    "Lately: a local-first OCR and translation extension that runs on WebGPU, agent skills for motion-graphics videos in " +
+    "[holdframe](https://github.com/zane-tv/holdframe), and more interactive TikTok Live stages.",
   linkedin: "https://www.linkedin.com/in/zane-tv",
   email: "tientv.63.work@gmail.com",
+} as const;
+
+export type Role = {
+  /** Octicon name. */
+  icon: string;
+  title: string;
+  /** Two short lines. */
+  stack: readonly [string, string];
+};
+
+/** The "what I do" frieze, left to right. */
+export const roles: readonly Role[] = [
+  { icon: "browser", title: "Full-stack", stack: ["React · Next.js · Vue", "NestJS · Laravel · SQL"] },
+  { icon: "ai-model", title: "AI engineering", stack: ["LLM apps · agents · MCP", "OpenAI · ONNX · WebGPU"] },
+  { icon: "database", title: "Data engineering", stack: ["PySpark · Delta Lake", "Fabric · Power BI"] },
+  { icon: "container", title: "DevOps", stack: ["Docker · AWS · Linux", "GitHub Actions · Vercel"] },
+  { icon: "tools", title: "Dev tools", stack: ["Desktop apps · plugins", "Browser extensions"] },
+];
+
+export const languages = {
+  /** Left out of the byte count: decompiled, generated or markup-only code. */
+  ignore: ["Smali", "HTML", "CSS", "MDX"],
+  /** Named in the legend; the rest is summed as "Other". */
+  top: 5,
 } as const;
 
 export type Project = {
@@ -26,13 +52,6 @@ export type Project = {
 
 /** Rendered as a 2 x 2 grid, in this order. */
 export const featured: readonly Project[] = [
-  {
-    repo: "tiktok-live-temple-rpc",
-    title: "Chùa Linh Ứng Online",
-    story:
-      "A 9:16 Buddhist temple that runs as a TikTok Live. Viewers light incense, ring the bell and draw fortune sticks with comments, likes and gifts.",
-    stack: "Bun · JSON-RPC · ZeroTTS",
-  },
   {
     repo: "soft-db",
     title: "SoftDB",
@@ -46,6 +65,13 @@ export const featured: readonly Project[] = [
     story:
       "One OpenCode plugin that pools SuperGrok, ChatGPT and Kiro accounts, rotates when a quota runs dry, and shows usage in the TUI.",
     stack: "TypeScript · OpenCode",
+  },
+  {
+    repo: "tiktok-live-temple-rpc",
+    title: "Chùa Linh Ứng Online",
+    story:
+      "A 9:16 Buddhist temple that runs as a TikTok Live. Viewers light incense, ring the bell and draw fortune sticks with comments, likes and gifts.",
+    stack: "Bun · JSON-RPC · ZeroTTS",
   },
   {
     repo: "agent-skills",

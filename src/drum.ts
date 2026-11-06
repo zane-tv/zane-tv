@@ -62,7 +62,17 @@ export function chain(count: number, radius: number, r: number, fromDeg = 0, swe
   const steps = closed ? count : count - 1;
   const centers: Pt[] = [];
   for (let i = 0; i < count; i++) centers.push(polar(0, 0, radius, fromDeg + (i * sweepDeg) / steps));
+  return chainAt(centers, r, closed);
+}
 
+/** The same chain along a straight line, as on the drum's side bands. */
+export function linearChain(x0: number, x1: number, y: number, r: number, spacing: number): string {
+  const count = Math.floor((x1 - x0) / spacing) + 1;
+  const offset = x0 + (x1 - x0 - (count - 1) * spacing) / 2;
+  return chainAt(Array.from({ length: count }, (_, i): Pt => [offset + i * spacing, y]), r, false);
+}
+
+function chainAt(centers: Pt[], r: number, closed: boolean): string {
   let circles = "";
   let dots = "";
   for (const c of centers) {
@@ -71,10 +81,10 @@ export function chain(count: number, radius: number, r: number, fromDeg = 0, swe
   }
 
   let d = "";
-  const links = closed ? count : count - 1;
+  const links = closed ? centers.length : centers.length - 1;
   for (let i = 0; i < links; i++) {
     const a = centers[i]!;
-    const b = centers[(i + 1) % count]!;
+    const b = centers[(i + 1) % centers.length]!;
     const dx = b[0] - a[0];
     const dy = b[1] - a[1];
     const dist = Math.hypot(dx, dy);
@@ -118,24 +128,18 @@ export function flock(count: number, radius: number, fromDeg = 0, sweepDeg = 360
 /**
  * Weekly contributions as radial ticks, oldest week just after 12 o'clock,
  * newest just before it. Length follows sqrt so one busy week does not flatten
- * the rest; empty weeks show as faint dots.
+ * the rest; empty weeks show as faint dots. Each week is its own `.tk` element
+ * with a staggered delay, so a CSS fade sweeps clockwise around the ring.
  */
 export function contributionRing(weeks: readonly number[], r0: number, maxLen: number, color: string): string {
   const max = Math.max(1, ...weeks);
-  let ticks = "";
-  let empty = "";
-  weeks.forEach((count, i) => {
+  const marks = weeks.map((count, i) => {
     const a = ((i + 0.5) * 360) / weeks.length;
     const base = polar(0, 0, r0, a);
-    if (count === 0) {
-      empty += `<circle cx="${n(base[0])}" cy="${n(base[1])}" r="1.5"/>`;
-      return;
-    }
+    const delay = `style="animation-delay:${n(0.4 + i * 0.03)}s"`;
+    if (count === 0) return `<circle class="tk" ${delay} cx="${n(base[0])}" cy="${n(base[1])}" r="1.5" stroke="none" opacity=".45"/>`;
     const len = 2 + maxLen * Math.sqrt(count / max);
-    ticks += `M${pt(base)}L${pt(polar(0, 0, r0 + len, a))}`;
+    return `<path class="tk" ${delay} d="M${pt(base)}L${pt(polar(0, 0, r0 + len, a))}"/>`;
   });
-  return (
-    `<path d="${ticks}" fill="none" stroke="${color}" stroke-width="4.4" stroke-linecap="round"/>` +
-    `<g fill="${color}" opacity=".45">${empty}</g>`
-  );
+  return `<g fill="${color}" stroke="${color}" stroke-width="4.4" stroke-linecap="round">${marks.join("")}</g>`;
 }
