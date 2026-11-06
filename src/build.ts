@@ -4,7 +4,7 @@ import { card } from "./card";
 import { featured, profile, support } from "./content";
 import { fetchProfile } from "./github";
 import { hero } from "./hero";
-import { parseVietQR, qrPath } from "./qr";
+import { parseVietQR, readQR } from "./qr";
 import { donatePage, readme } from "./readme";
 import { rolesArt } from "./roles";
 import { languagesArt, statsArt } from "./stats";
@@ -17,15 +17,17 @@ const root = new URL("..", import.meta.url).pathname;
 const token = process.env.GITHUB_TOKEN;
 if (!token) throw new Error("GITHUB_TOKEN is required (locally: GITHUB_TOKEN=$(gh auth token) bun run build)");
 
-const { bin, account } = parseVietQR(support.vietqr);
+const qrPng = new Uint8Array(await Bun.file(`${root}${support.qrImage}`).arrayBuffer());
+const scanned = readQR(qrPng);
+const { bin, account } = parseVietQR(scanned.payload);
 if (bin !== support.bank.bin) throw new Error(`VietQR bank BIN ${bin} does not match ${support.bank.name} (${support.bank.bin})`);
+const qr = { base64: Buffer.from(qrPng).toString("base64"), width: scanned.width, height: scanned.height };
 
 await loadFonts(`${root}fonts`);
 const data = await fetchProfile(profile.login, token);
 for (const p of featured) {
   if (!data.repos.has(p.repo)) throw new Error(`featured repository ${profile.login}/${p.repo} is not a public, non-fork repo`);
 }
-const qr = qrPath(support.vietqr);
 
 // Render everything before touching the disk, so a failed run leaves the last good output in place.
 const files = new Map<string, string>();

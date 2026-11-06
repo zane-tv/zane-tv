@@ -10,22 +10,25 @@ const W = 880;
 const H = 320;
 const PAD = 30;
 const TILE_W = 216;
-const TILE_H = 248; // QR square plus a caption strip
-const QUIET = 3; // quiet zone in modules, inside the paper tile
+
+export type QrImage = { base64: string; width: number; height: number };
 
 export function supportAlt(account: string): string {
   return `${support.title}. ${support.message} ${support.messageVi} VietQR for ${support.bank.name} account ${account}.`;
 }
 
-export function supportArt(t: Theme, qr: { size: number; d: string }, account: string): string {
+export function supportArt(t: Theme, qr: QrImage, account: string): string {
   const g = new Glyphs();
 
-  // The QR is the drum's sun: its bands radiate from the code, cropped by the frame.
+  // The bank's own QR card, scaled but otherwise untouched, sits where the drum's sun would be.
+  const tileH = (TILE_W * qr.height) / qr.width;
+  if (tileH > H - 40) throw new Error("QR image is too tall for the support block");
   const tx = W - PAD - TILE_W;
-  const ty = (H - TILE_H) / 2;
+  const ty = (H - tileH) / 2;
   const cx = tx + TILE_W / 2;
-  const cy = ty + TILE_W / 2;
+  const cy = ty + tileH / 2;
   const outer = 228;
+  if (Math.hypot(TILE_W / 2, tileH / 2) >= 180) throw new Error("QR image reaches into the drum bands");
   const drum =
     `<g clip-path="url(#frame)"><g transform="translate(${n(cx)} ${n(cy)})" color="${t.bronze}" stroke="currentColor" fill="none" stroke-width=".9" opacity=".42">` +
     `<circle class="rip" r="180" stroke-width="1.4" opacity="0"/>` +
@@ -59,18 +62,14 @@ export function supportArt(t: Theme, qr: { size: number; d: string }, account: s
     g.text({ font: "monoMedium", size: 26, tracking: 0.06 }, account, PAD, H - 36, { fill: t.ink }),
   ].join("");
 
-  const k = TILE_W / (qr.size + QUIET * 2);
-  const caption = "QUÉT ĐỂ ỦNG HỘ · SCAN TO TIP";
-  const captionStyle: TextStyle = { font: "monoMedium", size: 9.5, tracking: 0.08 };
-  if (measure(captionStyle, caption) > TILE_W - 20) throw new Error("support caption is wider than the QR tile");
+  const box = `x="${n(tx)}" y="${n(ty)}" width="${TILE_W}" height="${n(tileH)}"`;
   const tile =
-    `<rect x="${n(tx)}" y="${n(ty)}" width="${TILE_W}" height="${TILE_H}" rx="14" fill="${t.paper}" stroke="${t.line}" stroke-opacity=".12"/>` +
-    `<path fill="${t.qrInk}" shape-rendering="crispEdges" transform="translate(${n(tx + QUIET * k)} ${n(ty + QUIET * k)}) scale(${n(k, 5)})" d="${qr.d}"/>` +
-    g.text(captionStyle, caption, cx, ty + TILE_W + 17, { fill: t.qrInk, opacity: 0.62, anchor: "middle" });
+    `<image ${box} clip-path="url(#tile)" href="data:image/png;base64,${qr.base64}"/>` +
+    `<rect ${box} rx="14" fill="none" stroke="${t.line}" stroke-opacity=".12"/>`;
 
   const frame = `<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="14" fill="none" stroke="${t.line}" stroke-opacity=".16"/>`;
 
-  // Same beat as the hero drum: a ring of sound leaves the QR every 4s.
+  // Same beat as the hero drum: a ring of sound leaves the QR every 6s.
   const style = motion(
     spin("cw", 200),
     spin("ccw", -120),
@@ -83,7 +82,9 @@ export function supportArt(t: Theme, qr: { size: number; d: string }, account: s
     height: H,
     title: supportAlt(account),
     style,
-    defs: `<clipPath id="frame"><rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="14"/></clipPath>${BIRD}${g.defs()}`,
+    defs:
+      `<clipPath id="frame"><rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="14"/></clipPath>` +
+      `<clipPath id="tile"><rect ${box} rx="14"/></clipPath>${BIRD}${g.defs()}`,
     body: frame + drum + tile + text,
   });
 }

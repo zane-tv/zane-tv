@@ -1,4 +1,5 @@
-import QRCode from "qrcode";
+import jsQR from "jsqr";
+import { PNG } from "pngjs";
 
 /** CRC-16/CCITT-FALSE, as required by EMVCo merchant-presented QR (field 63). */
 function crc16(input: string): string {
@@ -43,22 +44,10 @@ export function parseVietQR(payload: string): VietQR {
   return { bin, account };
 }
 
-/** QR matrix as one path in module units (1 unit = 1 module), quiet zone excluded. */
-export function qrPath(payload: string): { size: number; d: string } {
-  const { size, data } = QRCode.create(payload, { errorCorrectionLevel: "M" }).modules;
-  let d = "";
-  for (let row = 0; row < size; row++) {
-    let col = 0;
-    while (col < size) {
-      if (!data[row * size + col]) {
-        col++;
-        continue;
-      }
-      let end = col;
-      while (end < size && data[row * size + end]) end++;
-      d += `M${col} ${row}h${end - col}v1h${col - end}z`;
-      col = end;
-    }
-  }
-  return { size, d };
+/** Reads the QR code printed in a PNG, so text shown next to the image can't drift from it. */
+export function readQR(png: Uint8Array): { payload: string; width: number; height: number } {
+  const image = PNG.sync.read(Buffer.from(png));
+  const code = jsQR(new Uint8ClampedArray(image.data), image.width, image.height);
+  if (!code) throw new Error("no QR code found in the image");
+  return { payload: code.data, width: image.width, height: image.height };
 }

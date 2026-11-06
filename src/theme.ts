@@ -11,8 +11,6 @@ export type Theme = {
   line: string; // hairlines, drawn with low opacity
   bronze: string;
   patina: string;
-  paper: string; // QR tile
-  qrInk: string;
 };
 
 export const themes: readonly Theme[] = [
@@ -24,8 +22,6 @@ export const themes: readonly Theme[] = [
     line: "#ECE6DB",
     bronze: "#D29A5C",
     patina: "#73C3A9",
-    paper: "#F3EEE4",
-    qrInk: "#14130F",
   },
   {
     name: "light",
@@ -35,7 +31,5 @@ export const themes: readonly Theme[] = [
     line: "#1C1B19",
     bronze: "#99601F",
     patina: "#2B7F68",
-    paper: "#FBF8F2",
-    qrInk: "#14130F",
   },
 ];

@@ -88,6 +88,9 @@ export const support = {
     "Everything here is free and open source. If something saved you an afternoon, a small tip keeps the next experiment going.",
   messageVi: "Quét mã bằng app ngân hàng, MoMo hoặc ZaloPay. Cảm ơn!",
   bank: { name: "Techcombank", bin: "970407" },
-  /** Static VietQR exported from the Techcombank app (Napas 247). */
-  vietqr: "00020101021138580010A000000727012800069704070114190730759110150208QRIBFTTA5204601153037045802VN5903TCB6005Hanoi63049b40",
+  /**
+   * VietQR card exported from the Techcombank app, embedded unchanged. The
+   * account number printed beside it is decoded from this image at build time.
+   */
+  qrImage: "images/vietqr.png",
 } as const;
