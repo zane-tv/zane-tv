@@ -2,7 +2,7 @@ import { profile } from "./content";
 import { BIRD, chain, comb, contributionRing, feathers, flock, rings, sun } from "./drum";
 import type { ProfileData } from "./github";
 import { cycle, motion, spin } from "./motion";
-import { svgDoc } from "./svg";
+import { n, svgDoc } from "./svg";
 import type { Theme } from "./theme";
 import { Glyphs, measure, type TextStyle } from "./type";
 
@@ -15,7 +15,7 @@ export const TITLE_SLOT = 3;
 
 export function heroAlt(data: ProfileData): string {
   return (
-    `${profile.name}: ${profile.titles.join(", ")}. ${profile.intro.join(" ")} ` +
+    `${profile.name} (${profile.location}): ${profile.titles.join(", ")}. ${profile.intro.join(" ")} ` +
     `The bronze drum's outer ring charts ${data.total.toLocaleString("en-US")} contributions over the last year, one tick per week.`
   );
 }
@@ -34,6 +34,16 @@ export function hero(t: Theme, data: ProfileData): string {
 
   // Baselines chosen so the text block's optical centre sits on the drum's centre line.
   const lastIntroY = 266 + (profile.intro.length - 1) * 26;
+  const metaY = lastIntroY + 46;
+  const locStyle: TextStyle = { font: "bold", size: 14, tracking: 0.03 };
+  const stackStyle: TextStyle = { font: "mono", size: 12.5 };
+  const locW = 26 + measure(locStyle, profile.location) + 12;
+  if (4 + locW + 14 + measure(stackStyle, profile.stack) > 470) throw new Error("location and stack line runs into the drum");
+  const badge =
+    `<rect x="4" y="${metaY - 19.5}" width="${n(locW)}" height="27" rx="7" fill="${t.bronze}" fill-opacity=".16" stroke="${t.bronze}" stroke-opacity=".75"/>` +
+    `<g transform="translate(18 ${metaY - 6})" fill="${t.bronze}">${sun(5, 6.2, 2.4)}</g>` +
+    g.text(locStyle, profile.location, 30, metaY, { fill: t.bronze });
+
   const text = [
     g.text({ font: "monoMedium", size: 12, tracking: 0.24 }, profile.greeting, 4, 74, { fill: t.muted }),
     g.text({ font: "display", size: 118, tracking: -0.05 }, profile.name, 0, 182, { fill: t.ink }),
@@ -42,7 +52,8 @@ export function hero(t: Theme, data: ProfileData): string {
       (s, i) => `<g class="ti" style="animation-delay:${i * TITLE_SLOT}s"${i ? ` opacity="0"` : ""}>${g.text(title, s, 30, 228, { fill: t.bronze })}</g>`,
     ),
     ...profile.intro.map((line, i) => g.text(intro, line, 4, 266 + i * 26, { fill: t.soft })),
-    g.text({ font: "mono", size: 12.5 }, profile.meta, 4, lastIntroY + 44, { fill: t.muted }),
+    badge,
+    g.text(stackStyle, profile.stack, 4 + locW + 14, metaY, { fill: t.muted }),
   ].join("");
 
   const ringText =

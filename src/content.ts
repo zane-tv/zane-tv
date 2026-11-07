@@ -11,7 +11,8 @@ export const profile = {
   titles: ["Full-stack engineer", "AI engineer", "Data engineer", "DevOps engineer", "Tool builder"],
   /** Hero lines, broken by hand for a good rag. Each must fit 470px at 17.5px. */
   intro: ["I build products that solve real problems,", "ship them early, then make them perfect."],
-  meta: "Saigon, Vietnam · TypeScript · Go · Python · PHP",
+  location: "Việt Nam",
+  stack: "TypeScript · Go · Python · PHP",
   lately:
     "Lately: a local-first OCR and translation extension that runs on WebGPU, agent skills for motion-graphics videos in " +
     "[holdframe](https://github.com/zane-tv/holdframe), and more interactive TikTok Live stages.",
