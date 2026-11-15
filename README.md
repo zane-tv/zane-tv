@@ -12,7 +12,7 @@
 </p>
 
 <p>
-  <a href="https://github.com/zane-tv?tab=repositories&sort=stargazers"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg"><img src="assets/stats-light.svg" width="49.3%" alt="GitHub by the numbers: 270 stars, 357 forks, 42 followers, 299 commits in the last year, 46 PRs in the last year, 28 new repos in the last year."></picture></a>
+  <a href="https://github.com/zane-tv?tab=repositories&sort=stargazers"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg"><img src="assets/stats-light.svg" width="49.3%" alt="GitHub by the numbers: 270 stars, 357 forks, 43 followers, 299 commits in the last year, 46 PRs in the last year, 28 new repos in the last year."></picture></a>
   <a href="https://github.com/zane-tv?tab=repositories"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/languages-dark.svg"><img src="assets/languages-light.svg" width="49.3%" alt="Languages across public repositories: TypeScript 70%, JavaScript 14%, Go 12%, Python 2%, Shell 1%, Other 1%."></picture></a>
 </p>
 
