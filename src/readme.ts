@@ -37,7 +37,7 @@ export function readme(data: ProfileData, account: string): string {
 
   return `${GENERATED}
 
-${picture("hero", heroAlt(data), "100%")}
+<a href="${profile.website}">${picture("hero", heroAlt(data), "100%")}</a>
 
 ${picture("roles", rolesAlt(), "100%")}
 
@@ -62,7 +62,7 @@ ${supportBlock(data, account)}
 
 </details>
 
-<sub><a href="${profile.linkedin}">LinkedIn</a> · <a href="mailto:${profile.email}">${profile.email}</a></sub>
+<sub><a href="${profile.website}">zanedev.pro</a> · <a href="${profile.linkedin}">LinkedIn</a> · <a href="mailto:${profile.email}">${profile.email}</a></sub>
 `;
 }
 

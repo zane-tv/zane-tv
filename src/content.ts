@@ -16,6 +16,7 @@ export const profile = {
   lately:
     "Lately: a local-first OCR and translation extension that runs on WebGPU, agent skills for motion-graphics videos in " +
     "[holdframe](https://github.com/zane-tv/holdframe), and more interactive TikTok Live stages.",
+  website: "https://zanedev.pro",
   linkedin: "https://www.linkedin.com/in/zane-tv",
   email: "tientv.63.work@gmail.com",
 } as const;
