@@ -12,11 +12,11 @@
 </p>
 
 <p>
-  <a href="https://github.com/zane-tv?tab=repositories&sort=stargazers"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg"><img src="assets/stats-light.svg" width="49.3%" alt="GitHub by the numbers: 274 stars, 359 forks, 44 followers, 305 commits in the last year, 47 PRs in the last year, 31 new repos in the last year."></picture></a>
+  <a href="https://github.com/zane-tv?tab=repositories&sort=stargazers"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg"><img src="assets/stats-light.svg" width="49.3%" alt="GitHub by the numbers: 274 stars, 359 forks, 45 followers, 305 commits in the last year, 47 PRs in the last year, 31 new repos in the last year."></picture></a>
   <a href="https://github.com/zane-tv?tab=repositories"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/languages-dark.svg"><img src="assets/languages-light.svg" width="49.3%" alt="Languages across public repositories: TypeScript 72%, JavaScript 14%, Go 11%, Python 2%, Shell 1%, Other 1%."></picture></a>
 </p>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/activity-dark.svg"><img src="assets/activity-light.svg" width="100%" alt="Contribution calendar: 383 contributions in the last year, 2 days in the current streak, 11 days in the longest streak."></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/activity-dark.svg"><img src="assets/activity-light.svg" width="100%" alt="Contribution calendar: 383 contributions in the last year, 0 days in the current streak, 11 days in the longest streak."></picture>
 
 Lately: a local-first OCR and translation extension that runs on WebGPU, agent skills for motion-graphics videos in [holdframe](https://github.com/zane-tv/holdframe), and more interactive TikTok Live stages.
 
